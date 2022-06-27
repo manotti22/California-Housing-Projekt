@@ -23,7 +23,7 @@ class DataIngestion:
     def download_housing_data(self,) -> str:
         try:
             #extraction remote url to download dataset
-            download_url = self.data_ingestion_config.Dataset_download_url
+            download_url = self.data_ingestion_config.dataset_download_url
 
             #folder location to download file
             tgz_download_dir = self.data_ingestion_config.tgz_download_dir
