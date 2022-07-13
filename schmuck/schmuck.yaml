@@ -1,8 +1,8 @@
-training_pipeline_config:
+training_pipeline_ordner:
   pipeline_name: package
-  artifact_dir: artifact
+  Ordner_dir: ordner
 
-data_ingestion:
+data_ingestion_ordner:
   dataset_download_url: 
   raw_data_dir: raw_data
   tgz_download_dir: tgz_data
@@ -13,20 +13,20 @@ data_ingestion:
 
 
 
-data_validation:
+data_validation_ordner:
   schema_dir: schmuck
   schema_file_name: schema.yaml
   report_file_name: report.json 
   report_page_file_name: report.html 
 
-data_transformation:
+data_transform_ordner:
   transformed_dir: transformed_data
   transformed_train_dir: train
   transformed_test_dir: test
   preprocessing_dir: preprocessed
   preprocessed_object_file_name: preprocessed.pkl
   
-model_trainer:
+model_trainer:ordner:
   trained_model_dir: trained_model
   model_file_name: model.pkl
   base_accuracy: 0.6
@@ -34,11 +34,11 @@ model_trainer:
   model_file_name: model.yaml
 
 
-model_evaluation:
+model_evaluation_ordner:
   model_evaluation_file_name: model_evaluation.yaml
   
 
-model_pusher_config:
+model_pusher_ordner:
   model_export_dir: saved_models
 
 

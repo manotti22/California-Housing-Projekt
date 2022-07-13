@@ -4,4 +4,7 @@ sklearn
 matplotlib
 seaborn 
 xgboost
-flask 
+Flask 
+dill
+PyYaMl
+-e .
