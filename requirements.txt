@@ -1,10 +1,10 @@
-pandas 
-numpy 
+numpy
+Flask
+gunicorn
 sklearn
-matplotlib
-seaborn 
-xgboost
-Flask 
+pandas
+PyYAML
+evidently
 dill
-PyYaMl
+matplotlib
 -e .
