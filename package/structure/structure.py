@@ -1,6 +1,6 @@
 
-from package.gebilde.schmuck_gebilde import DataIngestionSchmuck, DataTransformationSchmuck,DataValidationSchmuck,   \
-ModelTrainerSchmuck,ModelEvaluationSchmuck,ModelPusherSchmuck,TrainingPipelineSchmuck
+from typing_extensions import Self
+from package.gebilde.schmuck_gebilde import DataIngestionSchmuck, TrainingPipelineSchmuck
 from package.util.util import read_yaml_file
 from package.logger import logging
 import sys,os
@@ -17,6 +17,9 @@ class Structure:
         try:
             self.schmuck_info  = read_yaml_file(file_path=schmuck_file_path)
             self.training_pipeline_ordner = self.get_training_pipeline_schmuck()
+            self.time_stamp= current_time_stamp
+
+
             self.time_stamp = current_time_stamp
         except Exception as e:
             raise PackageException(e,sys) from e
@@ -24,7 +27,7 @@ class Structure:
 
     def get_data_ingestion_schmuck(self) ->DataIngestionSchmuck:
         try:
-            ordner_dir = self.training_pipeline_ordner.ordner_dir
+            ordner_dir = self.training_pipeline_ordner
             data_ingestion_ordner_dir=os.path.join(
                 ordner_dir,
                 DATA_INGESTION_ORDNER_DIR,
@@ -69,7 +72,7 @@ class Structure:
 
 def get_training_pipeline_schmuck(self) ->TrainingPipelineSchmuck:
         try:
-            training_pipeline_ordner = self.config_info[TRAINING_PIPELINE_ORDNER_KEY]
+            training_pipeline_ordner = self.schmuck.info[TRAINING_PIPELINE_ORDNER_KEY]
             ordner_dir = os.path.join(ROOT_DIR,
             training_pipeline_ordner[TRAINING_PIPELINE_NAME_KEY],
             training_pipeline_ordner[TRAINING_PIPELINE_ORDNER_DIR_KEY]
