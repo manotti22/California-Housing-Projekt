@@ -4,7 +4,7 @@ from package.exception import PackageException
 from package.logger import logging
 from package.gebilde.ordner_gebilde import DataIngestionOrdner
 import tarfile
-import numpy as np
+import numpy as np 
 from six.moves import urllib
 import pandas as pd
 from sklearn.model_selection import StratifiedShuffleSplit
@@ -110,7 +110,7 @@ class DataIngestion:
                                 is_ingested=True,
                                 message=f"Data ingestion completed successfully."
                                 )
-            logging.info(f"Data Ingestion artifact:[{data_ingestion_ordner}]")
+            logging.info(f"Data Ingestion ordner:[{data_ingestion_ordner}]")
             return data_ingestion_ordner
 
         except Exception as e:
