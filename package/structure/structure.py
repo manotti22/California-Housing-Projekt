@@ -1,5 +1,3 @@
-
-from typing_extensions import Self
 from package.gebilde.schmuck_gebilde import DataIngestionSchmuck, TrainingPipelineSchmuck
 from package.util.util import read_yaml_file
 from package.logger import logging
@@ -16,7 +14,7 @@ class Structure:
         ) -> None:
         try:
             self.schmuck_info  = read_yaml_file(file_path=schmuck_file_path)
-            self.training_pipeline_ordner = self.get_training_pipeline_schmuck()
+            self.training_pipeline_ordner = self.get_data_ingestion_schmuck()
             self.time_stamp= current_time_stamp
 
 
@@ -33,7 +31,7 @@ class Structure:
                 DATA_INGESTION_ORDNER_DIR,
                 self.time_stamp
             )
-            data_ingestion_info = self.ordner_info[DATA_INGESTION_ORDNER_KEY]
+            data_ingestion_info = self.schmuck_info[DATA_INGESTION_ORDNER_KEY]
             
             dataset_download_url = data_ingestion_info[DATA_INGESTION_DOWNLOAD_URL_KEY]
             tgz_download_dir = os.path.join(
@@ -72,7 +70,7 @@ class Structure:
 
 def get_training_pipeline_schmuck(self) ->TrainingPipelineSchmuck:
         try:
-            training_pipeline_ordner = self.schmuck.info[TRAINING_PIPELINE_ORDNER_KEY]
+            training_pipeline_ordner = os.path.join  [TRAINING_PIPELINE_ORDNER_DIR_KEY]
             ordner_dir = os.path.join(ROOT_DIR,
             training_pipeline_ordner[TRAINING_PIPELINE_NAME_KEY],
             training_pipeline_ordner[TRAINING_PIPELINE_ORDNER_DIR_KEY]
