@@ -40,6 +40,3 @@ model_evaluation_ordner:
 
 model_pusher_ordner:
   model_export_dir: saved_models
-
-
-
