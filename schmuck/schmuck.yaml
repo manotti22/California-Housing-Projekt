@@ -3,8 +3,7 @@ training_pipeline_ordner:
   ordner_dir: ordner
 
 data_ingestion_ordner:
-  dataset_download_url: https://raw.githubusercontent.com/avnyadav/ml_dataset/main/data.csv
-
+  dataset_download_url: https://raw.githubusercontent.com/manotti22/Travel-Package-Prediction-Projekt/main/TourismData.csv
   raw_data_dir: raw_data
   tgz_download_dir: tgz_data
   ingested_dir: ingested_data
