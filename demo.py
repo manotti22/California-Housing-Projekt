@@ -4,6 +4,7 @@ from package.logger import logging
 
 def main():
     try:
+        print("Hello")
         pipeline = Pipeline()
         pipeline.run_pipeline()
              

@@ -1,9 +1,10 @@
 training_pipeline_ordner:
   pipeline_name: package
-  Ordner_dir: ordner
+  ordner_dir: ordner
 
 data_ingestion_ordner:
-  dataset_download_url: https://www.kaggle.com/datasets/riteshvsharma/tourismxlsx/package/package.tgz
+  dataset_download_url: https://raw.githubusercontent.com/avnyadav/ml_dataset/main/data.csv
+
   raw_data_dir: raw_data
   tgz_download_dir: tgz_data
   ingested_dir: ingested_data

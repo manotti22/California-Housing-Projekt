@@ -6,7 +6,7 @@ from package.bestandteil import *
 from package.exception import PackageException
 
 
-class Structure:
+class structure:
 
     def __init__(self,
         schmuck_file_path:str =SCHMUCK_FILE_PATH,
@@ -14,7 +14,7 @@ class Structure:
         ) -> None:
         try:
             self.schmuck_info  = read_yaml_file(file_path=schmuck_file_path)
-            self.training_pipeline_ordner = self.get_data_ingestion_schmuck()
+            self.training_pipeline_ordner= self.get_training_pipeline_schmuck()
             self.time_stamp= current_time_stamp
 
 
@@ -25,7 +25,7 @@ class Structure:
 
     def get_data_ingestion_schmuck(self) ->DataIngestionSchmuck:
         try:
-            ordner_dir = self.training_pipeline_ordner
+            ordner_dir = self.training_pipeline_ordner.ordner_dir
             data_ingestion_ordner_dir=os.path.join(
                 ordner_dir,
                 DATA_INGESTION_ORDNER_DIR,
@@ -68,16 +68,16 @@ class Structure:
         except Exception as e:
             raise PackageException(e,sys) from e
 
-def get_training_pipeline_schmuck(self) ->TrainingPipelineSchmuck:
-        try:
-            training_pipeline_ordner = os.path.join  [TRAINING_PIPELINE_ORDNER_DIR_KEY]
-            ordner_dir = os.path.join(ROOT_DIR,
-            training_pipeline_ordner[TRAINING_PIPELINE_NAME_KEY],
-            training_pipeline_ordner[TRAINING_PIPELINE_ORDNER_DIR_KEY]
-            )
+    def get_training_pipeline_schmuck(self) ->TrainingPipelineSchmuck:
+            try:
+                training_pipeline_ordner = self.schmuck_info[TRAINING_PIPELINE_ORDNER_KEY]
+                ordner_dir = os.path.join(ROOT_DIR,
+                training_pipeline_ordner[TRAINING_PIPELINE_NAME_KEY],
+                training_pipeline_ordner[TRAINING_PIPELINE_ORDNER_DIR_KEY]
+                )
 
-            training_pipeline_ordner = TrainingPipelineSchmuck(ordner_dir=ordner_dir)
-            logging.info(f"Training pipleine Schmuck: {training_pipeline_ordner}")
-            return training_pipeline_ordner
-        except Exception as e:
-            raise PackageException(e,sys) from e
+                training_pipeline_ordner = TrainingPipelineSchmuck(ordner_dir=ordner_dir)
+                logging.info(f"Training pipleine Schmuck: {training_pipeline_ordner}")
+                return training_pipeline_ordner
+            except Exception as e:
+                raise PackageException(e,sys) from e

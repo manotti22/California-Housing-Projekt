@@ -1,5 +1,5 @@
 from ast import Try
-from package.structure.structure import Structure
+from package.structure.structure import structure
 from package.logger import logging, get_log_file_name
 from package.exception import PackageException
 
@@ -12,7 +12,7 @@ import os, sys
 
 class Pipeline:
 
-  def __init__(self,schmuck: Structure= Structure()) -> None:
+  def __init__(self,schmuck: structure= structure()) -> None:
       try:
          self.schmuck=schmuck
       except Exception as e:
