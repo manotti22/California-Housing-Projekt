@@ -1,4 +1,4 @@
-from package.gebilde.schmuck_gebilde import DataIngestionSchmuck, DataValidationSchmuck, TrainingPipelineSchmuck
+from package.gebilde.schmuck_gebilde import DataIngestionSchmuck, DataValidationSchmuck, TrainingPipelineSchmuck,DataTransformationSchmuck
 from package.util.util import read_yaml_file
 from package.logger import logging
 import sys,os
@@ -100,6 +100,52 @@ class structure:
                 report_page_file_path=report_page_file_path,
             )
             return data_validation_ordner
+        except Exception as e:
+            raise PackageException(e,sys) from e
+    
+    def get_data_transformation_schmuck(self) -> DataTransformationSchmuck:
+        try:
+            ordner_dir = self.training_pipeline_ordner.ordner_dir
+
+            data_transformation_ordner_dir=os.path.join(
+                ordner_dir,
+                DATA_TRANSFORM_ORDNER_DIR,
+                self.time_stamp
+            )
+
+            data_transformation_schmuck_info=self.schmuck_info[DATA_TRANSFORM_ORDNER_KEY]
+
+
+            preprocessed_object_file_path = os.path.join(
+                data_transformation_ordner_dir,
+                data_transformation_schmuck_info[DATA_TRANSFORM_PREPROCESSING_DIR_KEY],
+                data_transformation_schmuck_info[DATA_TRANSFORM_PREPROCESSED_FILE_NAME_KEY]
+            )
+
+            
+            transformed_train_dir=os.path.join(
+            data_transformation_ordner_dir,
+            data_transformation_schmuck_info[DATA_TRANSFORM_DIR_NAME_KEY],
+            data_transformation_schmuck_info[DATA_TRANSFORM_TRAIN_DIR_NAME_KEY]
+            )
+
+
+            transformed_test_dir = os.path.join(
+            data_transformation_ordner_dir,
+            data_transformation_schmuck_info[DATA_TRANSFORM_DIR_NAME_KEY],
+            data_transformation_schmuck_info[DATA_TRANSFORM_TEST_DIR_NAME_KEY]
+
+            )
+            
+
+            data_transformation_ordner=DataTransformationSchmuck(
+                preprocessed_object_file_path=preprocessed_object_file_path,
+                transformed_train_dir=transformed_train_dir,
+                transformed_test_dir=transformed_test_dir
+            )
+
+            logging.info(f"Data transformation config: {data_transformation_ordner}")
+            return data_transformation_ordner
         except Exception as e:
             raise PackageException(e,sys) from e
 
