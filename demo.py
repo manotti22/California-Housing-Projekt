@@ -1,12 +1,13 @@
 from package.pipeline.pipeline import Pipeline
 from package.exception import PackageException
 from package.logger import logging
-
+from package.structure.structure import structure
 def main():
     try:
         print("Hello")
         pipeline = Pipeline()
         pipeline.run_pipeline()
+        
              
     except Exception as e:
 

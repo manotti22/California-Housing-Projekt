@@ -1,4 +1,4 @@
-from package.gebilde.schmuck_gebilde import DataIngestionSchmuck, TrainingPipelineSchmuck
+from package.gebilde.schmuck_gebilde import DataIngestionSchmuck, DataValidationSchmuck, TrainingPipelineSchmuck
 from package.util.util import read_yaml_file
 from package.logger import logging
 import sys,os
@@ -65,6 +65,41 @@ class structure:
             )
             logging.info(f"Data Ingestion ORDNER: {data_ingestion_ordner}")
             return data_ingestion_ordner
+        except Exception as e:
+            raise PackageException(e,sys) from e
+
+    def get_data_validation_schmuck(self) -> DataValidationSchmuck:
+        try:
+            ordner_dir = self.training_pipeline_ordner.ordner_dir
+
+            data_validation_ordner_dir=os.path.join(
+                ordner_dir,
+                DATA_VALIDATION_ORDNER_DIR_NAME,
+                self.time_stamp
+            )
+            data_validation_ordner = self.schmuck_info[DATA_VALIDATION_ORDNER_KEY]
+
+
+            schema_file_path = os.path.join(ROOT_DIR,
+            data_validation_ordner[DATA_VALIDATION_SCHEMA_DIR_KEY],
+            data_validation_ordner[DATA_VALIDATION_SCHEMA_FILE_NAME_KEY]
+            )
+
+            report_file_path = os.path.join(data_validation_ordner_dir,
+            data_validation_ordner[DATA_VALIDATION_REPORT_FILE_NAME_KEY]
+            )
+
+            report_page_file_path = os.path.join(data_validation_ordner_dir,
+            data_validation_ordner[DATA_VALIDATION_REPORT_PAGE_FILE_NAME_KEY]
+
+            )
+
+            data_validation_ordner = DataValidationSchmuck(
+                schema_file_path=schema_file_path,
+                report_file_path=report_file_path,
+                report_page_file_path=report_page_file_path,
+            )
+            return data_validation_ordner
         except Exception as e:
             raise PackageException(e,sys) from e
 
