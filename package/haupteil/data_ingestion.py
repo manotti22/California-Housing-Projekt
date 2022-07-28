@@ -73,11 +73,7 @@ class DataIngestion:
             logging.info(f"Reading csv file: [{package_file_path}]")
             package_data_frame = pd.read_csv(package_file_path)
 
-            package_data_frame["ProdTaken_cat"] = pd.cut(
-                package_data_frame["ProdTaken"],
-                bins=[0.0, 1.5, 3.0, 4.5, 6.0, np.inf],
-                labels=[1,2,3,4,5]
-            )
+          
             
 
             logging.info(f"Splitting data into train and test")
@@ -86,9 +82,10 @@ class DataIngestion:
 
             split = StratifiedShuffleSplit(n_splits=1, test_size=0.2, random_state=42)
 
-            for train_index,test_index in split.split(package_data_frame, package_data_frame["ProdTaken_cat"]):
-                strat_train_set = package_data_frame.loc[train_index].drop(["ProdTaken_cat"],axis=1)
-                strat_test_set = package_data_frame.loc[test_index].drop(["ProdTaken_cat"],axis=1)
+
+            for train_index,test_index in split.split(package_data_frame,package_data_frame['ProdTaken']):
+                strat_train_set = package_data_frame.loc[train_index].drop(["CustomerID"],axis=1)
+                strat_test_set = package_data_frame.loc[test_index].drop(["CustomerID"],axis=1)
 
             train_file_path = os.path.join(self.data_ingestion_ordner.ingested_train_dir,
                                             file_name)
