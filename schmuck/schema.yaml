@@ -1,35 +1,45 @@
 columns:
-CustomerID      :              int64
-ProdTaken       :              int64
-Age             :            float64
-TypeofContact   :             object
-CityTier        :              int64
-DurationOfPitch :            float64
-Occupation      :             object
-Gender          :             object
-NumberOfPersonVisiting :       int64
-NumberOfFollowups :          float64
-ProductPitched    :           object
-PreferredPropertyStar :       float64
-MaritalStatus       :         object
-NumberOfTrips       :        float64
-Passport             :         int64
-PitchSatisfactionScore  :      int64
-OwnCar                  :      int64
-NumberOfChildrenVisiting  :  float64
-Designation              :    object
-MonthlyIncome            :   float64
+  Age             :            float64
+  TypeofContact   :             object
+  CityTier        :              int64
+  DurationOfPitch :            float64
+  Occupation      :             object
+  Gender          :             object
+  NumberOfPersonVisiting :       int64
+  NumberOfFollowups :          float64
+  PreferredPropertyStar :       float64
+  MaritalStatus       :         object
+  NumberOfTrips       :        float64
+  Passport             :         int64
+  ProductPitched  :             object
+  ProdTaken       :              int64
+  PitchSatisfactionScore  :      int64
+  OwnCar                  :      int64
+  NumberOfChildrenVisiting  :  float64
+  Designation              :    object
+  MonthlyIncome            :   float64
 
 
--
--categorical_columns_not object:
--CityTier
--ProdTaken
--NumberOfPersonVisiting
--NumberOfChildrenVisiting
--PreferredPropertyStar
--Passport
--PitchSatisfactionScore
--OwnCar
+numerical_columns:
+ -Age
+ -CityTier
+ -DurationOfPitch
+ -NumberOfPersonVisiting
+ -NumberOfFollowups
+ -PreferredPropertyStar
+ -NumberOfTrips
+ -Passport
+ -PitchSatisfactionScore
+ -OwnCar
+ -NumberOfChildrenVisiting
+ -MonthlyIncome
+
+categorical_columns:
+
+- TypeofContact
+- Occupation   
+- Gender
+- MaritalStatus 
+- Designation 
 
 target_column: ProdTaken

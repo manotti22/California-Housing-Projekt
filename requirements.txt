@@ -7,4 +7,6 @@ PyYAML
 evidently
 dill
 matplotlib
+xgboost
+seaborn
 -e .
