@@ -1,6 +1,8 @@
 
 from package.exception import PackageException
 import sys
+import pandas as pd
+import numpy as np
 from package.logger import logging
 from typing import List
 from package.gebilde.ordner_gebilde import DataTransformOrdner, ModelTrainerOrdner
@@ -21,7 +23,7 @@ class PackageEstimatorModel:
         self.preprocessing_object = preprocessing_object
         self.trained_model_object = trained_model_object
 
-    def predict(self, X):
+    def predict(self, X:pd.DataFrame):
         """
         function accepts raw inputs and then transformed raw input using preprocessing_object
         which gurantees that the inputs are in the same format as the training data
@@ -53,16 +55,15 @@ class ModelTrainer:
         try:
             logging.info(f"Loading transformed training dataset")
             transformed_train_file_path = self.data_transformation_ordner.transformed_train_file_path
-            #train_array = load_numpy_array_data(file_path=transformed_train_file_path)
-            input_feature_train_df= load_numpy_array_data(file_path=transformed_train_file_path)
+            train_array = load_numpy_array_data(file_path=transformed_train_file_path)
 
             logging.info(f"Loading transformed testing dataset")
             transformed_test_file_path = self.data_transformation_ordner.transformed_test_file_path
-            #test_array = load_numpy_array_data(file_path=transformed_test_file_path)
-            input_feature_test_df=load_numpy_array_data(file_path=transformed_test_file_path)
+            test_array = load_numpy_array_data(file_path=transformed_test_file_path)
 
             logging.info(f"Splitting training and testing input and target feature")
-            x_train,y_train,x_test,y_test = 
+            
+            x_train,y_train,x_test,y_test = train_array[:,:-1],train_array[:,-1],test_array[:,:-1],test_array[:,-1]
             
 
             logging.info(f"Extracting model config file path")
@@ -100,14 +101,13 @@ class ModelTrainer:
 
 
             model_trainer_ordner=  ModelTrainerOrdner(is_trained=True,message="Model Trained successfully",
-            trained_model_file_path=trained_model_file_path,
-            train_recall= metric_info.train_recall
-            test_recall = metric_info.test_recall
-            train_accuracy= metric_info.train_accuracy
-            test_accuracy=metric_info.test_accuracy
-            model_accuracy=metric_info.model_accuracy
-            
-            )
+                                                      trained_model_file_path=trained_model_file_path,
+                                                      train_recall= metric_info.train_recall,
+                                                      test_recall = metric_info.test_recall,
+                                                      train_accuracy= metric_info.train_accuracy,
+                                                      test_accuracy=metric_info.test_accuracy,
+                                                      model_accuracy=metric_info.model_accuracy
+                                                      )
 
             logging.info(f"Model Trainer Artifact: {model_trainer_ordner}")
             return model_trainer_ordner

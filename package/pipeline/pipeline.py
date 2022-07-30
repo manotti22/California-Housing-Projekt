@@ -137,7 +137,8 @@ class Pipeline:
                                              )
             logging.info(f"Pipeline experiment: {Pipeline.experiment}")
 
-            self.save_experiment()
+            self.save
+
             data_ingestion_ordner = self.start_data_ingestion()
             data_validation_ordner= self.start_data_validation(data_ingestion_ordner=data_ingestion_ordner)
             data_transformation_ordner = self.start_data_transformation(
@@ -157,5 +158,65 @@ class Pipeline:
                 logging.info("Trained model rejected.")
             logging.info("Pipeline completed.")
 
+      
+
+            
+            stop_time = datetime.now()
+            Pipeline.experiment = Experiment(experiment_id=Pipeline.experiment.experiment_id,
+                                             initialization_timestamp=self.schmuck.time_stamp,
+                                             artifact_time_stamp=self.schmuck.time_stamp,
+                                             running_status=False,
+                                             start_time=Pipeline.experiment.start_time,
+                                             stop_time=stop_time,
+                                             execution_time=stop_time - Pipeline.experiment.start_time,
+                                             message="Pipeline has been completed.",
+                                             experiment_file_path=Pipeline.experiment_file_path,
+                                             is_model_accepted=model_evaluation_ordner.is_model_accepted,
+                                             accuracy=model_trainer_ordner.model_accuracy
+                                             )
+            logging.info(f"Pipeline experiment: {Pipeline.experiment}")
+            self.save_experiment()
         except Exception as e:
-            raise PackageException(e, sys) from e  
+            raise PackageException(e, sys) from e
+
+     def run(self):
+        try:
+            self.run_pipeline()
+        except Exception as e:
+            raise e
+
+     def save_experiment(self):
+        try:
+            if Pipeline.experiment.experiment_id is not None:
+                experiment = Pipeline.experiment
+                experiment_dict = experiment._asdict()
+                experiment_dict: dict = {key: [value] for key, value in experiment_dict.items()}
+
+                experiment_dict.update({
+                    "created_time_stamp": [datetime.now()],
+                    "experiment_file_path": [os.path.basename(Pipeline.experiment.experiment_file_path)]})
+
+                experiment_report = pd.DataFrame(experiment_dict)
+
+                os.makedirs(os.path.dirname(Pipeline.experiment_file_path), exist_ok=True)
+                if os.path.exists(Pipeline.experiment_file_path):
+                    experiment_report.to_csv(Pipeline.experiment_file_path, index=False, header=False, mode="a")
+                else:
+                    experiment_report.to_csv(Pipeline.experiment_file_path, mode="w", index=False, header=True)
+            else:
+                print("First start experiment")
+        except Exception as e:
+            raise PackageException(e, sys) from e
+
+     @classmethod
+     def get_experiments_status(cls, limit: int = 5) -> pd.DataFrame:
+
+        try:
+            if os.path.exists(Pipeline.experiment_file_path):
+                df = pd.read_csv(Pipeline.experiment_file_path)
+                limit = -1 * int(limit)
+                return df[limit:].drop(columns=["experiment_file_path", "initialization_timestamp"], axis=1)
+            else:
+                return pd.DataFrame()
+        except Exception as e:
+            raise PackageException(e, sys) from e

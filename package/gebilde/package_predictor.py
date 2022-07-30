@@ -66,25 +66,24 @@ class PackageData:
 
     def get_package_data_as_dict(self):
         try:
-            input_data = {
-                "Age": [self.Age],
-                "TypofContact": [self.TypofContact],
-                "CityTier": [self.CityTier],
-                "DurationOfPitch": [self.DurationOfPitch],
-                "Designation": [self.Designation],
-                "Occupation": [self.Occupation],
-                "Gender": [self.Gender],
-                "NumberOfPersonVisiting": [self.NumberOfPersonVisiting],
-                "NumberOfFollowups": [self.NumberOfFollowups],
-                "MaritalStatus":[self.MaritalStatus],
-                 "NumberOfTrips":[self.NumberOfTrips],
-                " Passport ":[self. Passport ],
-                 "ProductPitched":[self.ProductPitched],
-                "PitchSatisfactionScore ":[self.PitchSatisfactionScore ],
-                "OwnCar ":[self.OwnCar ],
-                "NumberOfChildrenVisiting ":[self.NumberOfChildrenVisiting ],
-                "Designation":[self.Designation ],
-                "MonthlyIncome":[self.MonthlyIncome]}
+            input_data = {"Age": [self.Age],
+                         "TypofContact": [self.TypofContact],
+                         "CityTier": [self.CityTier],
+                        "DurationOfPitch": [self.DurationOfPitch],
+                         "Occupation": [self.Occupation],
+                         "Gender": [self.Gender],
+                         "NumberOfPersonVisiting": [self.NumberOfPersonVisiting],
+                         "NumberOfFollowups": [self.NumberOfFollowups],
+                         "ProductPitched":[self.ProductPitched],
+                         "PreferredPropertyStar":[self.PreferredPropertyStar],
+                          "MaritalStatus":[self.MaritalStatus],
+                          "NumberOfTrips":[self.NumberOfTrips],
+                          " Passport ":[self. Passport ],
+                          "PitchSatisfactionScore ":[self.PitchSatisfactionScore ],
+                           "OwnCar ":[self.OwnCar ],
+                            "NumberOfChildrenVisiting ":[self.NumberOfChildrenVisiting ],
+                           "Designation":[self.Designation ],
+                            "MonthlyIncome":[self.MonthlyIncome]}
             return input_data
         except Exception as e:
             raise PackageException(e, sys)
