@@ -1,4 +1,4 @@
-from package.gebilde.schmuck_gebilde import DataIngestionSchmuck, DataValidationSchmuck, TrainingPipelineSchmuck,DataTransformationSchmuck
+from package.gebilde.schmuck_gebilde import DataIngestionSchmuck, DataValidationSchmuck, ModelEvaluationSchmuck, ModelPusherSchmuck, ModelTrainerSchmuck, TrainingPipelineSchmuck,DataTransformationSchmuck  
 from package.util.util import read_yaml_file
 from package.logger import logging
 import sys,os
@@ -148,6 +148,41 @@ class structure:
             return data_transformation_ordner
         except Exception as e:
             raise PackageException(e,sys) from e
+
+    
+    def get_model_trainer_schmuck(self) -> ModelTrainerSchmuck:
+        try:
+            ordner_dir = self.training_pipeline_ordner.ordner_dir
+
+            model_trainer_ordner_dir=os.path.join(
+                ordner_dir,
+                MODEL_TRAINER_ORDNER_DIR,
+                self.time_stamp
+            )
+            model_trainer_schmuck_info = self.schmuck_info[MODEL_TRAINER_ORDNER_KEY]
+            trained_model_file_path = os.path.join(model_trainer_ordner_dir,
+            model_trainer_schmuck_info[MODEL_TRAINER_TRAINED_MODEL_DIR_KEY],
+            model_trainer_schmuck_info[MODEL_TRAINER_TRAINED_MODEL_FILE_NAME_KEY]
+            )
+
+            model_ordner_file_path = os.path.join(model_trainer_schmuck_info[MODEL_TRAINER_MODEL_ORDNER_DIR_KEY],
+            model_trainer_schmuck_info[MODEL_TRAINER_MODEL_ORDNER_FILE_NAME_KEY]
+            )
+
+            base_accuracy = model_trainer_schmuck_info[MODEL_TRAINER_BASE_ACCURACY_KEY]
+
+            model_trainer_ordner = ModelTrainerSchmuck(
+                trained_model_file_path=trained_model_file_path,
+                base_accuracy=base_accuracy,
+                model_ordner_file_path= model_ordner_file_path
+            )
+            logging.info(f"Model trainer config: {model_trainer_ordner}")
+            return model_trainer_ordner
+        except Exception as e:
+            raise PackageException(e,sys) from e
+
+    
+
 
     def get_training_pipeline_schmuck(self) ->TrainingPipelineSchmuck:
             try:
