@@ -6,7 +6,7 @@ from typing import List
 from package.gebilde.ordner_gebilde import DataTransformOrdner, ModelTrainerOrdner
 from package.gebilde.schmuck_gebilde import ModelTrainerSchmuck
 from package.util.util import load_numpy_array_data,save_object,load_object
-from package.gebilde.model_factory import MetricInfoArtifact, MetricInfoOrdner, ModelFactory,GridSearchedBestModel
+from package.gebilde.model_factory import MetricInfoOrdner, MetricInfoOrdner, ModelFactory,GridSearchedBestModel
 from package.gebilde.model_factory import evaluate_classification_model
 
 
@@ -62,7 +62,7 @@ class ModelTrainer:
             input_feature_test_df=load_numpy_array_data(file_path=transformed_test_file_path)
 
             logging.info(f"Splitting training and testing input and target feature")
-            x_train,y_train,x_test,y_test = #train_array[:,:-1],train_array[:,-1],test_array[:,:-1],test_array[:,-1]
+            x_train,y_train,x_test,y_test = 
             
 
             logging.info(f"Extracting model config file path")
@@ -101,8 +101,8 @@ class ModelTrainer:
 
             model_trainer_ordner=  ModelTrainerOrdner(is_trained=True,message="Model Trained successfully",
             trained_model_file_path=trained_model_file_path,
-            train_recall=metric_info.train_recall
-            test_recall =metric_info.test_recall
+            train_recall= metric_info.train_recall
+            test_recall = metric_info.test_recall
             train_accuracy= metric_info.train_accuracy
             test_accuracy=metric_info.test_accuracy
             model_accuracy=metric_info.model_accuracy

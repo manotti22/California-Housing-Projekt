@@ -15,7 +15,7 @@ DataTransformOrdner = namedtuple("DataTransformOrdner",
      "preprocessed_object_file_path"])
 
 ModelTrainerOrdner = namedtuple("ModelTrainerOrdner", ["is_trained", "message", "trained_model_file_path",
-                                                           "train_rmse", "test_rmse", "train_accuracy", "test_accuracy",
+                                                           "train_recall", "test_recall", "train_accuracy", "test_accuracy",
                                                            "model_accuracy"])
 
 ModelEvaluationOrdner = namedtuple("ModelEvaluationOrdner", ["is_model_accepted", "evaluated_model_path"])

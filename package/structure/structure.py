@@ -176,13 +176,43 @@ class structure:
                 base_accuracy=base_accuracy,
                 model_ordner_file_path= model_ordner_file_path
             )
-            logging.info(f"Model trainer config: {model_trainer_ordner}")
+            logging.info(f"Model trainer ordner: {model_trainer_ordner}")
             return model_trainer_ordner
         except Exception as e:
             raise PackageException(e,sys) from e
-
     
 
+    def get_model_evaluation_schmuck(self) ->ModelEvaluationSchmuck:
+        try:
+            model_evaluation_ordner = self.schmuck_info[MODEL_EVALUATION_ORDNER_KEY]
+            ordner_dir = os.path.join(self.training_pipeline_ordner.ordner_dir,
+                                        MODEL_EVALUATION_ORDNER_DIR, )
+
+            model_evaluation_file_path = os.path.join(ordner_dir,
+                                                    model_evaluation_ordner[MODEL_EVALUATION_FILE_NAME_KEY])
+            response = ModelEvaluationSchmuck(model_evaluation_file_path=model_evaluation_file_path,
+                                            time_stamp=self.time_stamp)
+            
+            
+            logging.info(f"Model Evaluation Ordner: {response}.")
+            return response
+        except Exception as e:
+            raise PackageException(e,sys) from e
+    
+    def get_model_pusher_schmuck(self) -> ModelPusherSchmuck:
+        try:
+            time_stamp = f"{datetime.now().strftime('%Y%m%d%H%M%S')}"
+            model_pusher_schmuck_info = self.schmuck_info[MODEL_PUSHER_ORDNER_KEY]
+            export_dir_path = os.path.join(ROOT_DIR, model_pusher_schmuck_info[MODEL_PUSHER_MODEL_EXPORT_DIR_KEY],
+                                           time_stamp)
+
+            model_pusher_ordner = ModelPusherSchmuck(export_dir_path=export_dir_path)
+            logging.info(f"Model pusher ordner {model_pusher_ordner}")
+            return model_pusher_ordner
+
+        except Exception as e:
+            raise PackageException(e,sys) from e
+    
 
     def get_training_pipeline_schmuck(self) ->TrainingPipelineSchmuck:
             try:

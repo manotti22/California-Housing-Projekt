@@ -59,7 +59,7 @@ def evaluate_classification_model(model_list: list, X_train:np.ndarray, y_train:
     return
     It retured a named tuple
     
-    MetricInfoArtifact = namedtuple("MetricInfo",
+    MetricInfoOrdner = namedtuple("MetricInfo",
                                 ["model_name", "model_object", "train_recall", "test_recall", "train_accuracy",
                                  "test_accuracy", "model_accuracy", "index_number"])
     """
