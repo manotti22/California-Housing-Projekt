@@ -5,11 +5,14 @@ import pandas as pd
 import numpy as np
 from package.logger import logging
 from typing import List
-from package.gebilde.ordner_gebilde import DataTransformOrdner, ModelTrainerOrdner
+from package.gebilde.ordner_gebilde import DataTransformOrdner, ModelTrainerOrdner,DataIngestionOrdner,DataValidationOrdner
 from package.gebilde.schmuck_gebilde import ModelTrainerSchmuck
-from package.util.util import load_numpy_array_data,save_object,load_object
+from package.util.util import load_data, load_numpy_array_data,save_object,load_object
 from package.gebilde.model_factory import MetricInfoOrdner, MetricInfoOrdner, ModelFactory,GridSearchedBestModel
 from package.gebilde.model_factory import evaluate_classification_model
+from package.haupteil.data_ingestion import DataIngestion
+from sklearn.model_selection import train_test_split
+
 
 
 
@@ -43,33 +46,50 @@ class PackageEstimatorModel:
 
 class ModelTrainer:
 
-    def __init__(self, model_trainer_ordner:ModelTrainerSchmuck, data_transformation_ordner: DataTransformOrdner):
+    def __init__(self, model_trainer_ordner:ModelTrainerSchmuck, data_ingestion_ordner: DataIngestionOrdner,data_transformation_ordner:DataTransformOrdner):
         try:
             logging.info(f"{'>>' * 30}Model trainer log started.{'<<' * 30} ")
             self.model_trainer_ordner = model_trainer_ordner
-            self.data_transformation_ordner = data_transformation_ordner
+            self.data_ingestion_ordner = data_ingestion_ordner
+            self.data_transformation_ordner= data_transformation_ordner
         except Exception as e:
             raise PackageException(e, sys) from e
 
-    def initiate_model_trainer(self)->ModelTrainerOrdner:
+    def initiate_model_trainer(self,)->ModelTrainerOrdner:
         try:
             logging.info(f"Loading transformed training dataset")
-            transformed_train_file_path = self.data_transformation_ordner.transformed_train_file_path
-            train_array = load_numpy_array_data(file_path=transformed_train_file_path)
+            train_file_path = self.data_ingestion_ordner.train_file_path
+            package_file_path = self.data_ingestion_ordner.train_file_path
+            train_array = load_data(file_path=train_file_path,schema_file_path=package_file_path)
 
             logging.info(f"Loading transformed testing dataset")
-            transformed_test_file_path = self.data_transformation_ordner.transformed_test_file_path
-            test_array = load_numpy_array_data(file_path=transformed_test_file_path)
+            test_file_path = self.data_ingestion_ordner.test_file_path
+            package_file_path = self.data_ingestion_ordner.test_file_path
+
+            test_array = load_data(file_path=test_file_path,schema_file_path=package_file_path)
 
             logging.info(f"Splitting training and testing input and target feature")
             
-            x_train,y_train,x_test,y_test = train_array[:,:-1],train_array[:,-1],test_array[:,:-1],test_array[:,-1]
+            # split the columns in Dependent and Independent Set
+            package_data_frame = pd.read_csv(package_file_path)
+
+
+            
+            X= package_data_frame.drop(columns=["ProdTaken","PitchSatisfactionScore","ProductPitched","NumberOfFollowups","DurationOfPitch"],axis=1)
+           
+            y= package_data_frame["ProdTaken"]
+            # use get_dummies function to convert the categorical columns
+            X = pd.get_dummies(X, drop_first=True)
+
+            
+            x_train,y_train,x_test,y_test = train_test_split(X,y, test_size=0.3, random_state=25,stratify=y)
+
             
 
-            logging.info(f"Extracting model config file path")
+            logging.info(f"Extracting model Ordner file path")
             model_ordner_file_path = self.model_trainer_ordner.model_ordner_file_path
 
-            logging.info(f"Initializing model factory class using above model config file: {model_ordner_file_path}")
+            logging.info(f"Initializing model factory class using above model Ordner file: {model_ordner_file_path}")
             model_factory = ModelFactory(model_ordner_path=model_ordner_file_path)
             
             

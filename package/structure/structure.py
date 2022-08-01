@@ -165,8 +165,9 @@ class structure:
             model_trainer_schmuck_info[MODEL_TRAINER_TRAINED_MODEL_FILE_NAME_KEY]
             )
 
-            model_ordner_file_path = os.path.join(model_trainer_schmuck_info[MODEL_TRAINER_MODEL_ORDNER_DIR_KEY],
-            model_trainer_schmuck_info[MODEL_TRAINER_MODEL_ORDNER_FILE_NAME_KEY]
+            model_ordner_file_path = os.path.join(model_trainer_ordner_dir,
+            model_trainer_schmuck_info[MODEL_TRAINER_TRAINED_MODEL_DIR_KEY],
+            model_trainer_schmuck_info[MODEL_TRAINER_TRAINED_MODEL_FILE_NAME_KEY]
             )
 
             base_accuracy = model_trainer_schmuck_info[MODEL_TRAINER_BASE_ACCURACY_KEY]
@@ -175,7 +176,8 @@ class structure:
                 trained_model_file_path=trained_model_file_path,
                 base_accuracy=base_accuracy,
                 model_ordner_file_path= model_ordner_file_path
-            )
+                )
+            
             logging.info(f"Model trainer ordner: {model_trainer_ordner}")
             return model_trainer_ordner
         except Exception as e:

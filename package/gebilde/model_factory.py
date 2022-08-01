@@ -42,11 +42,10 @@ MetricInfoOrdner = namedtuple("MetricInfoOrdner",
 
 
 
-def evaluate_regression_model(model_list: list, X_train:np.ndarray, y_train:np.ndarray, X_test:np.ndarray, y_test:np.ndarray, base_accuracy:float=0.6)->MetricInfoArtifact:
-    pass
 
 
-def evaluate_classification_model(model_list: list, X_train:np.ndarray, y_train:np.ndarray, X_test:np.ndarray, y_test:np.ndarray, base_accuracy:float=0.6) -> MetricInfoArtifact:
+
+def evaluate_classification_model(model_list: list, X_train:np.ndarray, y_train:np.ndarray, X_test:np.ndarray, y_test:np.ndarray, base_accuracy:float=0.6) -> MetricInfoOrdner:
     """
     Description:
     This function compare multiple classification model return best model
@@ -125,7 +124,7 @@ def evaluate_classification_model(model_list: list, X_train:np.ndarray, y_train:
         raise PackageException(e, sys) from e
 
 
-def get_sample_model_config_yaml_file(export_dir: str):
+def get_sample_model_ordner_yaml_file(export_dir: str):
     try:
         model_ordner = {
             GRID_SEARCH_KEY: {
@@ -167,6 +166,7 @@ def get_sample_model_config_yaml_file(export_dir: str):
 class ModelFactory:
     def __init__(self, model_ordner_path: str = None,):
         try:
+            
             self.schmuck: dict = ModelFactory.read_params(model_ordner_path)
 
             self.grid_search_cv_module: str = self.schmuck[GRID_SEARCH_KEY][MODULE_KEY]
@@ -193,16 +193,18 @@ class ModelFactory:
             return instance_ref
         except Exception as e:
             raise PackageException(e, sys) from e
-
-    @staticmethod
+    
     def read_params(ordner_path: str) -> dict:
         try:
-            with open(ordner_path) as yaml_file:
-                schmuck:dict = yaml.safe_load(yaml_file)
-            return schmuck
+            os.makedirs(ordner_path, exist_ok=True)
+            ordner_path = os.path.join(ordner_path, "model.yaml")
+
+            with open(ordner_path, 'w') as yaml_file:
+                ordner_path:dict = yaml.safe_load(yaml_file)
+            return ordner_path
         except Exception as e:
             raise PackageException(e, sys) from e
-
+   
     @staticmethod
     def class_for_name(module_name:str, class_name:str):
         try:
@@ -362,7 +364,7 @@ class ModelFactory:
         except Exception as e:
             raise PackageException(e, sys) from e
 
-    def get_best_model(self, X, y,base_accuracy=0.6) -> BestModel:
+    def get_best_model(self, X, y,base_accuracy=0.7) -> BestModel:
         try:
             logging.info("Started Initializing model from config file")
             initialized_model_list = self.get_initialized_model_list()

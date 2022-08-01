@@ -38,7 +38,7 @@ class Pipeline:
         try:
             os.makedirs(schmuck.training_pipeline_ordner.ordner_dir, exist_ok=True)
             Pipeline.experiment_file_path=os.path.join(schmuck.training_pipeline_ordner.ordner_dir,EXPERIMENT_DIR_NAME, EXPERIMENT_FILE_NAME)
-            super().__init__(daemon=False, name="pipeline")
+            #super().__init__(daemon=False, name="pipeline")
 
             self.schmuck=schmuck
         except Exception as e:
@@ -77,10 +77,11 @@ class Pipeline:
         except Exception as e:
             raise PackageException(e, sys)
 
-     def start_model_trainer(self, data_transformation_ordner: DataTransformOrdner) -> ModelTrainerOrdner:
+     def start_model_trainer(self, data_transformation_ordner: DataTransformOrdner,data_ingestion_ordner:DataIngestionOrdner) -> ModelTrainerOrdner:
         try:
             model_trainer = ModelTrainer(model_trainer_ordner=self.schmuck.get_model_trainer_schmuck(),
-                                         data_transformation_ordner=data_transformation_ordner
+                                         data_transformation_ordner=data_transformation_ordner,
+                                         data_ingestion_ordner=data_ingestion_ordner
                                          )
             return model_trainer.initiate_model_trainer()
         except Exception as e:
@@ -137,7 +138,7 @@ class Pipeline:
                                              )
             logging.info(f"Pipeline experiment: {Pipeline.experiment}")
 
-            self.save
+            self.save_experiment()
 
             data_ingestion_ordner = self.start_data_ingestion()
             data_validation_ordner= self.start_data_validation(data_ingestion_ordner=data_ingestion_ordner)
@@ -146,7 +147,8 @@ class Pipeline:
                 data_validation_ordner=data_validation_ordner
             )
             
-            model_trainer_ordner = self.start_model_trainer(data_transformation_ordner=data_transformation_ordner)
+            model_trainer_ordner = self.start_model_trainer(data_transformation_ordner=data_transformation_ordner,
+                                                            data_ingestion_ordner=data_ingestion_ordner )
             model_evaluation_ordner = self.start_model_evaluation(data_ingestion_ordner=data_ingestion_ordner,
                                                                     data_validation_ordner=data_validation_ordner,
                                                                     model_trainer_ordner=model_trainer_ordner)

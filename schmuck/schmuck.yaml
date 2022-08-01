@@ -26,10 +26,10 @@ data_transform_ordner:
   preprocessing_dir: preprocessed
   preprocessed_object_file_name: preprocessed.pkl
   
-model_trainer:ordner:
+model_trainer_ordner:
   trained_model_dir: trained_model
   model_file_name: model.pkl
-  base_accuracy: 0.7
+  base_accuracy: 0.6
   model_dir: schumck
   model_file_name: model.yaml
 

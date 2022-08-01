@@ -110,42 +110,32 @@ def predict():
 
     if request.method == 'POST':
           Age = float(request.form['Age'])
-          TypeofContact =request.form['TypeofContact']
-          CityTier        = int(request.form['CityTier'])
-          DurationOfPitch = float(request.form['DurationOfPitch '])
-          Occupation      =  request.form['Occupation']  
-          Gender          =  request.form['Gender']   
-          NumberOfPersonVisiting = int(request.form['NumberOfPersonVisiting'])
-          NumberOfFollowups = float(request.form['NumberOfFollowups'])
-          PreferredPropertyStar =float(request.form['PreferredPropertyStar'])
+          Gender          =  request.form['Gender'] 
           MaritalStatus  =   request.form['MaritalStatus']
+          TypeofContact =request.form['TypeofContact']
+          Occupation      =  request.form['Occupation']  
+          CityTier        = float(request.form['CityTier'])
+          NumberOfPersonVisiting = float(request.form['NumberOfPersonVisiting'])
+          NumberOfFollowups = float(request.form['NumberOfFollowups'])
           NumberOfTrips  =  float(request.form['umberOfTrips'])   
-          Passport       =   int(request.form['Passport'])   
-          ProductPitched  =   request.form['ProductPitched']      
-          PitchSatisfactionScore  = int(request.form['PitchSatisfactionScore'])   
-          OwnCar                  = int(request.form['OwnCar'])   
+          Passport       =   float(request.form['Passport'])   
+          OwnCar                  = float(request.form['OwnCar'])   
           NumberOfChildrenVisiting =float(request.form['umberOfChildrenVisiting'])   
-          Designation   = request.form['Designation']
           MonthlyIncome  = float(request.form['MonthlyIncome'])   
 
 
           package_data = PackageData(Age = Age,
                                    TypofContact =TypeofContact,  
                                     CityTier =CityTier,
-                                    DurationOfPitch=DurationOfPitch,
                                      Occupation=Occupation,
                                     Gender =Gender,
                                     NumberOfPersonVisiting=NumberOfPersonVisiting,
                                     NumberOfFollowups=NumberOfFollowups,
-                                    PreferredPropertyStar=PreferredPropertyStar,
                                     MaritalStatus = MaritalStatus,
                                      NumberOfTrips =NumberOfTrips,
                                     Passport =Passport,
-                                     ProductPitched = ProductPitched,
-                                      PitchSatisfactionScore = PitchSatisfactionScore,
                                      OwnCar = OwnCar,  
                                     NumberOfChildrenVisiting = NumberOfChildrenVisiting,
-                                    Designation =  Designation, 
                                     MonthlyIncome = MonthlyIncome 
                                    )
           package_df = package_data.get_package_input_data_frame()

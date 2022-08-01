@@ -4,10 +4,10 @@ grid_search:
   params:
     cv: 5
     verbose: 2
-
 model_selection:
   module_0:
     class: RandomForestClassifier
+    module: sklearn.ensemble
     class_weight: {0:0.15,1:0.85}
     random_state: 1
     module: sklearn.linear_model
