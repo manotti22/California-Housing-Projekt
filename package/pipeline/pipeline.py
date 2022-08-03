@@ -81,8 +81,7 @@ class Pipeline:
         try:
             model_trainer = ModelTrainer(model_trainer_ordner=self.schmuck.get_model_trainer_schmuck(),
                                          data_transformation_ordner=data_transformation_ordner,
-                                         data_ingestion_ordner=data_ingestion_ordner
-                                         )
+                                         data_ingestion_ordner=data_ingestion_ordner)
             return model_trainer.initiate_model_trainer()
         except Exception as e:
             raise PackageException(e, sys) from e
@@ -147,8 +146,9 @@ class Pipeline:
                 data_validation_ordner=data_validation_ordner
             )
             
-            model_trainer_ordner = self.start_model_trainer(data_transformation_ordner=data_transformation_ordner,
-                                                            data_ingestion_ordner=data_ingestion_ordner )
+            model_trainer_ordner = self.start_model_trainer(data_ingestion_ordner=data_ingestion_ordner ,
+                                                            data_transformation_ordner =  data_transformation_ordner 
+                                                            )
             model_evaluation_ordner = self.start_model_evaluation(data_ingestion_ordner=data_ingestion_ordner,
                                                                     data_validation_ordner=data_validation_ordner,
                                                                     model_trainer_ordner=model_trainer_ordner)
