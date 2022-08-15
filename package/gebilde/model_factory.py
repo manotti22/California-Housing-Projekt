@@ -196,10 +196,9 @@ class ModelFactory:
     
     def read_params(ordner_path: str) -> dict:
         try:
-            #os.makedirs(ordner_path, exist_ok=True)
-            #ordner_path = os.path.join(ordner_path, "model.yaml")
-
-            with open(ordner_pat) as yaml_file:
+          
+           
+            with open(ordner_path) as yaml_file:
                schmuck:dict = yaml.safe_load(yaml_file)
             return schmuck
         except Exception as e:
@@ -378,3 +377,4 @@ class ModelFactory:
                                                                                   base_accuracy=base_accuracy)
         except Exception as e:
             raise PackageException(e, sys)
+   

@@ -14,6 +14,7 @@ from package.bestandteil import SCHMUCK_DIR, get_current_time_stamp
 from package.pipeline.pipeline import Pipeline
 from package.gebilde.package_predictor import PackagePredictor, PackageData
 from flask import send_file, abort, render_template
+import dill
 
 
 ROOT_DIR = os.getcwd()
@@ -26,11 +27,17 @@ PIPELINE_DIR = os.path.join(ROOT_DIR, PIPELINE_FOLDER_NAME)
 MODEL_DIR = os.path.join(ROOT_DIR, SAVED_MODELS_DIR_NAME)
 from package.logger import get_log_dataframe
 
-
 PACKAGE_DATA_KEY = "package_data"
 PRODTAKEN_KEY = "ProdTaken"
 
-app = Flask(__name__)
+app = Flask(__name__,template_folder='Templates')
+model_pkl_file = r'C:\Users\HPr\Desktop\Projekte\Travel_Package_Project\trained_model_dir\model_pkl'
+saved_Bestmodel = dill.load(open(model_pkl_file,'rb'))
+@app.route('/',methods=['GET'])
+def Home():
+    return render_template('index.html')
+
+
 
 @app.route('/ordner', defaults={'class_path': 'Package'})
 @app.route('/ordner/<path:class_path>')
@@ -140,7 +147,8 @@ def predict():
                                    )
           package_df = package_data.get_package_input_data_frame()
           package_predictor = PackagePredictor(model_dir=MODEL_DIR)
-          ProdTaken= package_predictor.predict(X=package_df)
+
+          ProdTaken=saved_Bestmodel.predict(X=package_df)
           context = {
             PACKAGE_DATA_KEY: package_data.get_package_data_as_dict(),
             PRODTAKEN_KEY: ProdTaken,

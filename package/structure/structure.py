@@ -164,12 +164,19 @@ class structure:
             model_trainer_schmuck_info[MODEL_TRAINER_TRAINED_MODEL_DIR_KEY],
             model_trainer_schmuck_info[MODEL_TRAINER_TRAINED_MODEL_FILE_NAME_KEY]
             )
-
             model_ordner_file_path = os.path.join(model_trainer_ordner_dir,
             model_trainer_schmuck_info[MODEL_TRAINER_TRAINED_MODEL_DIR_KEY],
             model_trainer_schmuck_info[MODEL_TRAINER_TRAINED_MODEL_FILE_NAME_KEY]
             )
 
+            model_ordner_dir = r'C:\Users\HPr\Desktop\Projekte\Travel_Package_Project\package\ordner\model_trainer\2022-08-03-14-54-03\trained_model'
+            os.makedirs(model_ordner_dir,exist_ok=True)
+            model_ordner_file_path=os.path.basename(model_ordner_dir)
+            model_ordner_file_path = os.path.join(model_ordner_dir,model_ordner_file_path)
+
+
+            
+            
             base_accuracy = model_trainer_schmuck_info[MODEL_TRAINER_BASE_ACCURACY_KEY]
 
             model_trainer_ordner = ModelTrainerSchmuck(

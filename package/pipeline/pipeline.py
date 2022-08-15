@@ -146,9 +146,7 @@ class Pipeline:
                 data_validation_ordner=data_validation_ordner
             )
             
-            model_trainer_ordner = self.start_model_trainer(data_ingestion_ordner=data_ingestion_ordner ,
-                                                            data_transformation_ordner =  data_transformation_ordner 
-                                                            )
+            model_trainer_ordner = self.start_model_trainer( data_ingestion_ordner=data_ingestion_ordner, data_transformation_ordner =  data_transformation_ordner)
             model_evaluation_ordner = self.start_model_evaluation(data_ingestion_ordner=data_ingestion_ordner,
                                                                     data_validation_ordner=data_validation_ordner,
                                                                     model_trainer_ordner=model_trainer_ordner)
