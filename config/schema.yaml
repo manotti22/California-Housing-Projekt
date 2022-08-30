@@ -1,0 +1,47 @@
+columns:
+  CustomerID      :        int
+  Age             :        float
+  TypeofContact   :        object
+  CityTier        :        int
+  DurationOfPitch :        float
+  Occupation      :        object
+  Gender          :        object
+  NumberOfPersonVisiting :  int
+  NumberOfFollowups :       float
+  PreferredPropertyStar :   float
+  MaritalStatus       :     object
+  NumberOfTrips       :     float
+  Passport             :    int
+  ProductPitched  :         object
+  PitchSatisfactionScore  : int
+  OwnCar                  : int
+  NumberOfChildrenVisiting  : float
+  Designation              :  object
+  MonthlyIncome            : float
+  ProdTaken       :          int
+
+
+numerical_columns:
+  -  Age
+  -  CityTier
+  -  DurationOfPitch
+  -  NumberOfPersonVisiting
+  -  NumberOfFollowups
+  -  PreferredPropertyStar
+  -  NumberOfTrips
+  -  Passport
+  -  PitchSatisfactionScore
+  -  OwnCar
+  -  NumberOfChildrenVisiting
+  -  MonthlyIncome
+
+categorical_columns:
+
+  -  TypeofContact
+  -  Occupation   
+  -  Gender
+  -  MaritalStatus 
+  -  Designation 
+  -  ProductPitched 
+
+target_column: ProdTaken

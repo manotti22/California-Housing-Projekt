@@ -1,0 +1,7 @@
+best_model:
+  model_path: C:\Users\HPr\Desktop\Projekte\Travel_Package_Project\package\artifact\model_trainer\2022-08-30-22-55-27\trained_model\model.pkl
+history:
+  2022-08-30-22-20-50:
+    model_path: C:\Users\HPr\Desktop\Projekte\Travel_Package_Project\package\artifact\model_trainer\2022-08-30-20-23-52\trained_model\model.pkl
+  2022-08-30-22-55-27:
+    model_path: C:\Users\HPr\Desktop\Projekte\Travel_Package_Project\package\artifact\model_trainer\2022-08-30-22-20-50\trained_model\model.pkl

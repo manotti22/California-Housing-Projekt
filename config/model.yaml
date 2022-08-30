@@ -1,0 +1,28 @@
+grid_search:
+  class: GridSearchCV
+  module: sklearn.model_selection
+  params:
+    cv: 5
+    verbose: 2
+
+model_selection:
+  module_0:
+    class: DecisionTreeClassifier
+    module: sklearn.tree
+    params:
+      criterion: gini
+    search_param_grid:
+      min_samples_split:
+      - 2
+      - 3
+
+  module_1:
+    class: BaggingClassifier
+    module: sklearn.ensemble
+    params:
+      max_samples : 1.0
+    search_param_grid:
+      max_features:
+      - 1.0
+      bootstrap:
+      - True

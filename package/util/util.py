@@ -1,11 +1,10 @@
-import yaml 
 from package.exception import PackageException
+import yaml
 import os,sys
 import numpy as np
-import dill 
-import pandas as pd 
-from package.bestandteil import *
-
+import dill
+import pandas as pd
+from package.constant import *
 
 def write_yaml_file(file_path:str,data:dict=None):
     """
@@ -22,14 +21,13 @@ def write_yaml_file(file_path:str,data:dict=None):
         raise PackageException(e,sys)
 
 
-
 def read_yaml_file(file_path:str)->dict:
     """
     Reads a YAML file and returns the contents as a dictionary.
     file_path: str
     """
     try:
-        with open(file_path,'rb') as yaml_file:
+        with open(file_path, 'rb') as yaml_file:
             return yaml.safe_load(yaml_file)
     except Exception as e:
         raise PackageException(e,sys) from e
@@ -50,7 +48,7 @@ def save_numpy_array_data(file_path: str, array: np.array):
         raise PackageException(e, sys) from e
 
 
-def load_numpy_array_data(file_path: str, allow_pickle=True) -> np.array:
+def load_numpy_array_data(file_path: str) -> np.array:
     """
     load numpy array data from file
     file_path: str location of file to load
@@ -58,7 +56,7 @@ def load_numpy_array_data(file_path: str, allow_pickle=True) -> np.array:
     """
     try:
         with open(file_path, 'rb') as file_obj:
-            return np.load(file_obj,allow_pickle=True)
+            return np.load(file_obj)
     except Exception as e:
         raise PackageException(e, sys) from e
 
@@ -92,18 +90,18 @@ def load_data(file_path: str, schema_file_path: str) -> pd.DataFrame:
     try:
         datatset_schema = read_yaml_file(schema_file_path)
 
-        #schema = datatset_schema[DATASET_SCHEMA_COLUMNS_KEY]
+        schema = datatset_schema[DATASET_SCHEMA_COLUMNS_KEY]
 
         dataframe = pd.read_csv(file_path)
 
         error_messgae = ""
 
 
-        #for column in dataframe.columns:
-            #if column in list(schema.keys()):
-                #dataframe[column].astype(schema[column])
-            #else:
-                #error_messgae = f"{error_messgae} \nColumn: [{column}] is not in the schema."
+        for column in dataframe.columns:
+            if column in list(schema.keys()):
+                dataframe[column].astype(schema[column])
+            else:
+                error_messgae = f"{error_messgae} \nColumn: [{column}] is not in the schema."
         if len(error_messgae) > 0:
             raise Exception(error_messgae)
         return dataframe

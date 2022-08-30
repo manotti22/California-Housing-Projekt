@@ -1,169 +1,117 @@
-<!DOCTYPE html>
-<html lang="en">
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+{% extends 'header.html' %}
+
+{% block head %}
 
 
+<title>Index</title>
+{% endblock %}
 
-    <title> Travel_Package_Buy Probability</title>
-  <h1>
-   
-  <img src= "/Templates/pictures/kamele.jpg" height=300 weight=600>
+{% block content %}
 
-  </h1>
-     
-
-
-
-
-  <style>
-          
-    input {
-               box-sizing: border-box;
-              height: 10%;
-              width: 50%;
-
-            }
+<div class="row">
+    <div class="col-md-12 col-lg-12 col-sm-12"  style="margin-bottom:20px;">
+        <div class="row">
+            <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                Classification Project
+            </div>
+            <div class="card-body">
         
-    body {
-        background-color:orange;
-        color: black;
-        text-align: centre;
-        padding-left: 200px;
-        font-size: 1.25em;
-        font-weight: bold;
-      
+                <h5 class="card-title">Travel Package Purchase Prediction.</h5>
+
+
+                <p class="card-text">"The Travel company wants to enable and establish a viable business model to expand the customer base. One of the ways to expand the customer base is to introduce a new offering of packages.This Aplication Model predict the potential customer who is going to purchase the newly introduced travel package.
+
+                </p>
+            </div>
+        </div>
+        </div>
+        
+        </div>
+        </div>
+<div class="col-md-4 col-lg-4 col-sm-12">
+<div class="card">
+    <div class="card-header">
+       View Logs
+    </div>
+    <div class="card-body">
+
+        <h5 class="card-title">Log Files</h5>
+        <p class="card-text">All model training log file can be downloaded.</p>
+        <a class="btn btn-primary" href="/logs">Check Logs</a>
+    </div>
+</div>
+</div>
+
+
+<div class="col-md-4 col-lg-4 col-sm-12" style="margin-bottom:20px;">
+    <div class="card">
+        <div class="card-header">
+           View Artifacts
+        </div>
+        <div class="card-body">
     
-    </style>
-          
-<h1 styl e= "font-size: 28; text-align: center; font-weight: bold;"><u>Travel Package Buy Probability </u></h1>
- 
- <br>
-
- <!-- Inputs to our model-->
-<form action="{{ url_for('predict')}} " method="post">
+            <h5 class="card-title">Artifact Files</h5>
+            <p class="card-text">All model artifacts file can be downloaded.</p>
+            <a class="btn btn-primary" href="/artifact">Check Artifacts</a>
+        </div>
+    </div>
+    </div>
 
 
 
- 
-<tr>
-</select><td> 
-  <table></tr>
-  <td><label for="Age"> <b>Age :</b> </label>  
-    <select name="Age" id="Age"> 
-    <input type = "number"placeholder = "Years" required = "required" /><td>
-</tr>
-<tr>
-</select><td>
-
-  <table>
-  </tr>
-  <td><label for="SEX">Gender:</label>
-  <select name="SEX" id="SEX">
-  <option value="male">male</option>
-  <option value="female">female</option>
-</tr>
-
-<tr>
-</select><td>
+    <div class="col-md-4 col-lg-4 col-sm-12"  style="margin-bottom:20px;">
+        <div class="card">
+            <div class="card-header">
+               View Trained Models
+            </div>
+            <div class="card-body">
         
-  <table>
-<td><label for="MaritalStatus">Marital Status:</label>
-  <select name="MaritalStatus" id="MaritalStatus">
-  <option value="single">single</option>
-  <option value="married">married</option>
-</tr>
- <tr>
-</select><td>
-  <table>
-<td><label for="TypeofContact">TypeofContact:</label>
-  <select name="TypeofContact" id="TypeofContact">
-  <option value="Self Enquiry ">Self Enquiry</option>
-  <option value="Company Invited">Company Invited</option>
-  <option value="others">others</option><td>
-  </tr> 
+                <h5 class="card-title">Trained Models</h5>
+                <p class="card-text">All model file can be downloaded.</p>
+                <a class="btn btn-primary" href="/saved_models">Check Models</a>
+            </div>
+        </div>
+        </div>
+
+        
+    <div class="col-md-4 col-lg-4 col-sm-12"  style="margin-bottom:20px;">
+        <div class="card">
+            <div class="card-header">
+              Estimate Travel Package Purchase
+            </div>
+            <div class="card-body">
+        
+                <h5 class="card-title">Access Travel Package Purchase estimator</h5>
+                <p class="card-text">Form will be displayed. Submit the form to get estimated Travel Package Purchase by Customer.</p>
+                <a class="btn btn-primary" href="/predict">Get Estimated Prediction</a>
+            </div>
+        </div>
+        </div>
+ 
+        <div class="col-md-4 col-lg-4 col-sm-12"  style="margin-bottom:20px;">
+            <div class="card">
+                <div class="card-header">
+                  Train Travel Package estimator model.
+                </div>
+                <div class="card-body">
+            
+                    <h5 class="card-title">Initiate model training.</h5>
+                    <p class="card-text">Model training will be done. Files such as log, artifact and models can be viewed and downloaded using appropriate link.</p>
+                    <a class="btn btn-danger" href="/train">Initiate Training</a>
+                </div>
+            </div>
+            </div>
+        
+
+
+
+
+            
+</div>
+
+{% endblock %}
   
-
-</select><td>
-  <table>
-  </tr>
- <td><label for="Occupation">Occupation:</label>
-   <select name="Occupation" id="Occupation">
-   <option value="Salaried  ">Salaried</option>
-   <option value="Freelancer">Freelancer</option>
-   <option value="others">others</option><td>
-
-   
- </select></td>
- <table>
-  </tr>
-<label for="CityTier"> CityTier:< </label>
-<input type = "number"  placeholder = "1-3" required = "required" /><td>
-</tr> 
-<tr>
- </select><td>
-<table>
-</tr>
-<label for="Number Visit"> <b>NrPersonVisit:</b> </label>
-<input type = "number" placeholder = "1-5" required = "required" />/><td>
-
- </select></td>
- <table>
-  </tr>
-<td><label for="NumberOfFollowups"> Number followups </label>
-<input type = "number" placeholder = "1-6" required = "required" /></td>
-
-</select></td>
-<table>
-  </tr>
- <td><label for="NumberOfTrips"> <b> NumberOfTrips :</b> </label>
-<input type = "number" placeholder = "1-25" required = "required" /></td>
-
-</tr>
-
-<tr>
-</select></td>
-<table>
-  </tr>
-<td><label for="Passport"> <b> having Passport:</b> </label>
- <input type = "number" placeholder = "No=0,yes=1" required = "required" /></td>
-
-</select></td>
-<table>
-  </tr>
-<td><label for="OwnCar"> <b> OwnCar:</b> </label>
-<input type = "number" id  placeholder = "No=0,yes=1" required = "required" /></td>
-
- </select></td>
- <table>
-  </tr>
-<td><label for="NrChildrenVisit"> <b>  NrChildrenVisit :</b> </label>
- <input type = "number"  id =  placeholder = "0-3" required = "required" /></td>
-</tr>
-
-</select></td>
-<table>
-  </tr>
-<td><label for="MonthlyIncome"> <b> MonthlyIncome  :</b> </label>
-  <input type = "number" placeholder = " DOLLARS " required = "required" /></td>
-</tr>
-</table>
-
-
-<button type="submit" class="btn btn-primary btn-block btn-large","style=" padding: 20px 40px" >Predict</button>
-{{ prediction_text }}
-<br><br>
-
-</form> <br><br><br><br><br>
-<footer class="button"><f> </f></footer>
-<!--footer class="button"></footer-->
-<style>
-</style>
-
-
-</body>
-</html>
-    
-        
-    
+  
+  

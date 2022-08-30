@@ -1,22 +1,19 @@
-import logging
 from datetime import datetime
+import logging
 import os
-import pandas as pd
-from package.bestandteil import get_current_time_stamp 
-LOG_DIR="logs"
+from datetime import datetime
 
-def get_log_file_name():
-    return f"log_{get_current_time_stamp()}.log"
+LOG_DIR= "Travel_logs"
 
-LOG_FILE_NAME=get_log_file_name()
+CURRENT_TIME_STEMP= f"{datetime.now().strftime('%Y-%m-%d %H-%M-%S')}"
 
-os.makedirs(LOG_DIR,exist_ok=True)
+log_file_name= f"log{CURRENT_TIME_STEMP}.log"
 
-LOG_FILE_PATH = os.path.join(LOG_DIR,LOG_FILE_NAME)
+os.makedirs(LOG_DIR, exist_ok=True)
 
+log_file_path= os.path.join(LOG_DIR,log_file_name)
 
-
-logging.basicConfig(filename=LOG_FILE_PATH,
+logging.basicConfig(filename=log_file_path,
 filemode="w",
 format='[%(asctime)s]^;%(levelname)s^;%(lineno)d^;%(filename)s^;%(funcName)s()^;%(message)s',
 level=logging.INFO

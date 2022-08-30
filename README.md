@@ -1,7 +1,9 @@
 # Travel-Package-Prediction-Projekt
+
 machine_learning_project
 
-This is a Classification Project Model to predict if Tourist Costumer will buy a Travel Package with Travel Company
+This is a Classification Project Model 
+The  travel company dataset is used to analyze the customers' information and build a model to predict the potential customer who is going to purchase the newly introduced package
 
 ### Software and Account Requirement.
 
@@ -55,3 +57,10 @@ To setup CI/CD pipeline in heroku we need 3 information
 HEROKU_EMAIL = ottizoubairi@gmail.com
 HEROKU_API_KEY = <>
 HEROKU_APP_NAME = travelpackage-pred
+
+## 📑Documentation
+
+Detailed Project Report are in Github LLD Folder.
+
+## Explanation Video:
+https://youtu.be/-6rRIefjE20

@@ -1,4 +1,3 @@
-from this import s
 from flask import Flask, request
 import sys
 
@@ -9,40 +8,34 @@ from package.logger import logging
 from package.exception import PackageException
 import os, sys
 import json
-from package.structure.structure import structure
-from package.bestandteil import SCHMUCK_DIR, get_current_time_stamp
+from package.config.configuration import Configuration
+from package.constant import CONFIG_DIR, get_current_time_stamp
 from package.pipeline.pipeline import Pipeline
-from package.gebilde.package_predictor import PackagePredictor, PackageData
+from package.entity.package_predictor import PackagePredictor, PackageData
 from flask import send_file, abort, render_template
-import dill
 
 
 ROOT_DIR = os.getcwd()
-LOG_FOLDER_NAME = "logs"
+LOG_FOLDER_NAME = "Travel_logs"
 PIPELINE_FOLDER_NAME = "package"
 SAVED_MODELS_DIR_NAME = "saved_models"
-MODEL_SCHMUCK_FILE_PATH = os.path.join(ROOT_DIR, SCHMUCK_DIR, "model.yaml")
+MODEL_CONFIG_FILE_PATH = os.path.join(ROOT_DIR, CONFIG_DIR, "model.yaml")
 LOG_DIR = os.path.join(ROOT_DIR, LOG_FOLDER_NAME)
 PIPELINE_DIR = os.path.join(ROOT_DIR, PIPELINE_FOLDER_NAME)
 MODEL_DIR = os.path.join(ROOT_DIR, SAVED_MODELS_DIR_NAME)
+
+
 from package.logger import get_log_dataframe
 
-PACKAGE_DATA_KEY = "package_data"
+TRAVEL_DATA_KEY = "package_data"
 PRODTAKEN_KEY = "ProdTaken"
 
-app = Flask(__name__,template_folder='Templates')
-model_pkl_file = r'C:\Users\HPr\Desktop\Projekte\Travel_Package_Project\trained_model_dir\model_pkl'
-saved_Bestmodel = dill.load(open(model_pkl_file,'rb'))
-@app.route('/',methods=['GET'])
-def Home():
-    return render_template('index.html')
+app = Flask(__name__)
 
 
-
-@app.route('/ordner', defaults={'class_path': 'Package'})
-@app.route('/ordner/<path:class_path>')
-
-def render_ordner_dir(class_path):
+@app.route('/artifact', defaults={'class_path': 'package'})
+@app.route('/artifact/<path:class_path>')
+def render_artifact_dir(class_path):
     os.makedirs("package", exist_ok=True)
     # Joining the base and the requested path
     print(f"class_path: {class_path}")
@@ -64,7 +57,7 @@ def render_ordner_dir(class_path):
 
     # Show directory contents
     files = {os.path.join(abs_path, file_name): file_name for file_name in os.listdir(abs_path) if
-             "ordner" in os.path.join(abs_path, file_name)}
+             "artifact" in os.path.join(abs_path, file_name)}
 
     result = {
         "files": files,
@@ -84,7 +77,6 @@ def index():
 
 @app.route('/view_experiment_hist', methods=['GET', 'POST'])
 def view_experiment_history():
-
     experiment_df = Pipeline.get_experiments_status()
     context = {
         "experiment": experiment_df.to_html(classes='table table-striped col-12')
@@ -95,7 +87,7 @@ def view_experiment_history():
 @app.route('/train', methods=['GET', 'POST'])
 def train():
     message = ""
-    pipeline = Pipeline(schmuck=structure(current_time_stamp=get_current_time_stamp()))
+    pipeline = Pipeline(config=Configuration(current_time_stamp=get_current_time_stamp()))
     if not Pipeline.experiment.running_status:
         message = "Training started."
         pipeline.start()
@@ -111,7 +103,7 @@ def train():
 @app.route('/predict', methods=['GET', 'POST'])
 def predict():
     context = {
-        PACKAGE_DATA_KEY: None,
+        TRAVEL_DATA_KEY: None,
         PRODTAKEN_KEY: None
     }
 
@@ -147,17 +139,17 @@ def predict():
                                    )
           package_df = package_data.get_package_input_data_frame()
           package_predictor = PackagePredictor(model_dir=MODEL_DIR)
-
-          ProdTaken=saved_Bestmodel.predict(X=package_df)
+          ProdTaken = package_predictor.predict(X=package_df)
           context = {
-            PACKAGE_DATA_KEY: package_data.get_package_data_as_dict(),
+            TRAVEL_DATA_KEY: package_data.get_package_data_as_dict(),
             PRODTAKEN_KEY: ProdTaken,
-             }
-          return render_template('predict.html', context=context)
-    return render_template("predict.html", context=context)
+        }
+    return render_template('predict.html', context=context)
+
 
 @app.route('/saved_models', defaults={'class_path': 'saved_models'})
 @app.route('/saved_models/<path:class_path>')
+
 def saved_models_dir(class_path):
     os.makedirs("saved_models", exist_ok=True)
     # Joining the base and the requested path
@@ -168,7 +160,6 @@ def saved_models_dir(class_path):
     if not os.path.exists(abs_path):
         return abort(404)
 
-    
     # Check if path is a file and serve
     if os.path.isfile(abs_path):
         return send_file(abs_path)
@@ -184,19 +175,19 @@ def saved_models_dir(class_path):
     return render_template('saved_models_files.html', result=result)
 
 
-@app.route("/update_model_schmuck", methods=['GET', 'POST'])
-def update_model_schmuck():
+@app.route("/update_model_config", methods=['GET', 'POST'])
+def update_model_config():
     try:
         if request.method == 'POST':
-            model_schmuck = request.form['new_model_schmuck']
-            model_schmuck = model_schmuck.replace("'", '"')
-            print(model_schmuck)
-            model_schmuck = json.loads(model_schmuck)
+            model_config = request.form['new_model_config']
+            model_config = model_config.replace("'", '"')
+            print(model_config)
+            model_config = json.loads(model_config)
 
-            write_yaml_file(file_path=MODEL_SCHMUCK_FILE_PATH, data=model_schmuck)
+            write_yaml_file(file_path=MODEL_CONFIG_FILE_PATH, data=model_config)
 
-        model_schmuck = read_yaml_file(file_path=MODEL_SCHMUCK_FILE_PATH)
-        return render_template('update_model.html', result={"model_schmuck": model_schmuck})
+        model_config = read_yaml_file(file_path=MODEL_CONFIG_FILE_PATH)
+        return render_template('update_model.html', result={"model_config": model_config})
 
     except  Exception as e:
         logging.exception(e)
@@ -234,3 +225,4 @@ def render_log_dir(class_path):
 
 if __name__ == "__main__":
     app.run()
+          
