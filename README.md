@@ -60,7 +60,7 @@ HEROKU_APP_NAME = travelpackage-pred
 
 ## 📑Documentation
 
-Detailed Project Report are in Github LLD Folder.
+Detailed Project Report , Archicture, LLD, HLD, Wireframe are in Github Project Architecture Folder.
 
 ## Explanation Video:
 https://youtu.be/-6rRIefjE20
